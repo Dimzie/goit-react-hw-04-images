@@ -1,33 +1,30 @@
-import { Component } from 'react';
 import SearchBar from './SearchBar/SearchBar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageGallery from './ImageGallery/ImageGallery';
+import { useState } from 'react';
 
 
-export class App extends Component {
-  state = {
-    query: '',
-    page: 1
-  }
+export function App() {
+  const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
 
-  onSubmit = (query) => {
-    this.setState({query, page: 1});
-  }
+  const onSubmit = (newQuery) => {
+    setQuery(newQuery);
+    setPage(1);
+  };
 
-  onLoadMore = () => {
-    this.setState(prevState => ({
-      page: prevState.page + 1,
-    }))
-  }
+  const onLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
-  render() {
-    return (
-      <div className="App">
-        <SearchBar onSubmit={this.onSubmit} />
-        <ImageGallery query={this.state.query} onLoadMore={this.onLoadMore} page={this.state.page}/>
-        <ToastContainer autoClose={3000} limit={3}/>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <SearchBar onSubmit={onSubmit} />
+      <ImageGallery query={query} onLoadMore={onLoadMore} page={page} />
+      <ToastContainer autoClose={3000} limit={3} />
+    </div>
+  );
 }
+
+export default App;
