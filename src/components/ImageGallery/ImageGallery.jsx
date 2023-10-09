@@ -13,6 +13,10 @@ export function ImageGallery({ query, page, onLoadMore }) {
       setImgArr([]);
     }
 
+    if(query === "") {
+      return;
+    }
+
     setLoader(true);
 
     fetchImages(query, page)
